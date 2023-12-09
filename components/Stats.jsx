@@ -21,7 +21,7 @@ const statsData = [
 
 const Stats = () => {
   return (
-    <div className="flex flex-col xl:flex-row gap-x-8 gap-y-4 my-10">
+    <div className="flex xl:flex-row gap-x-8 gap-y-4 my-10">
         {
             statsData.map(({value, type, unit}, i) => (
                 <div

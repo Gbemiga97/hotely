@@ -1,13 +1,15 @@
 "use client"
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { AutoPlay } from 'swiper/modules'
+import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
+
 
 import { Button } from './ui/button'
 import Image from 'next/image'
 
 import { motion } from 'framer-motion'
+import { fadeIn } from '@/variants'
 
 
 const recommendationData = [
@@ -48,10 +50,28 @@ const recommendationData = [
 
 const Recommendation = () => {
   return (
-    <section>
+    <motion.section 
+        variants={fadeIn('up', 0.2)}
+        initial='hidden'
+        whileInView={'show'}
+        viewport={{ once: false, amount: 0 }}
+        className='pb-12 xl:pt-[157px] xl:pb-[112px] bg-soft_green-secondary relative'>
         {/* slide */}
-        <div>
-            <Swiper>
+        <motion.div
+        variants={fadeIn('up', 0.4)}
+        initial='hidden'
+        whileInView={'show'}
+        viewport={{ once: false, amount: 0 }}
+        >
+            <Swiper
+            autoplay={{
+                delay: 4000,
+                disableOnInteraction: false
+            }}
+            loop
+            speed={2000}
+            modules={[Autoplay]}
+            >
                 {
                     recommendationData.map(({name, image, price, desc, testimonial, location}, i) => (
                         <SwiperSlide key={i}>
@@ -87,8 +107,12 @@ const Recommendation = () => {
                                     alt={name}
                                     className='xl:rounded-tl-[20px] xl:rounded-bl-[20px]'
                                     />
-                                    <div>
-                                        <p>{testimonial.msg}</p>
+                                    <div className='bg-soft_green p-0 text-white text-center xl:text-left xl:max-w-[468px]
+                                    xl:min-h-[212px] xl:absolute xl:bottom-0 xl:translate-x-1/2 xl:rounded-xl xl:px-10 '>
+                                        <p className='mb-3 max-w-md mx-auto xl:max-w-none xl:mx-0 xl:mb-6'>
+                                        {testimonial.msg}</p>
+                                        <p className='text-xl font-bold'>
+                                            {testimonial.personName}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -97,8 +121,15 @@ const Recommendation = () => {
                     ))
                 }
             </Swiper>
-        </div>
-    </section>
+        </motion.div>
+        <Image 
+        src={'/recommendation/pattern.svg'}
+        width={240}
+        height={240}
+        alt='pattern'
+        className='hidden xl:flex absolute left-[135px] -bottom-[120px]'
+        />
+    </motion.section>
   )
 }
 
